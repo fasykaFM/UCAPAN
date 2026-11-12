@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday MISYKA>
+  <title>Happy Birthday Misyka</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&amp;display=swap" rel="stylesheet">
@@ -16,8 +16,7 @@
     body{margin:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",sans-serif;overflow-x:hidden}
     h1,h2,h3,p{margin-top:0}
     h1,h2,h3{font-family:"Playfair Display",serif}
-    button,input{font-family:inherit}
-    button{cursor:pointer}
+    button{font-family:inherit;cursor:pointer}
     :focus-visible{outline:3px solid var(--rose);outline-offset:4px}
     i[data-lucide],svg.lucide{width:19px;height:19px;stroke-width:1.8}
     main,header,footer{position:relative;z-index:1}
@@ -28,6 +27,7 @@
     @keyframes pulse{0%,100%{scale:1}50%{scale:1.1}}
     @keyframes rise{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:.5}100%{transform:translateY(-115vh) rotate(40deg);opacity:0}}
     @keyframes pop{from{opacity:0;scale:.88;translate:0 20px}to{opacity:1;scale:1;translate:0 0}}
+    @keyframes fall{0%{transform:translate3d(0,0,0) rotate(0);opacity:0}8%{opacity:1}100%{transform:translate3d(var(--sway,40px),110vh,0) rotate(540deg);opacity:.9}}
     .rise-in{opacity:0;animation:fadeUp .9s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--d,0s)}
     .reveal{opacity:0;translate:0 30px;transition:opacity .9s ease,translate .9s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
     .reveal.in{opacity:1;translate:0 0}
@@ -52,12 +52,20 @@
     .gate-no{background:transparent;color:var(--wine);border:1px solid #d9b9bd}
     .gate-no:hover{background:#f6e6e7}
 
-    /* ===== Tombol musik melayang ===== */
+    /* ===== Efek petasan & bunga ===== */
+    .fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60;background:rgba(36,25,30,0);transition:background .8s}
+    .fx.on{background:rgba(36,25,30,.55)}
+    .petals{position:fixed;inset:0;pointer-events:none;z-index:61;overflow:hidden}
+    .petals span{position:absolute;top:-50px;animation:fall linear forwards}
+
+    /* ===== Tombol musik melayang & pesan kecil ===== */
     .music-fab{position:fixed;right:20px;bottom:20px;z-index:15;width:50px;height:50px;border-radius:50%;border:0;background:var(--wine);color:#fff;display:grid;place-items:center;box-shadow:0 10px 26px #662c3c55;transition:transform .2s,background .2s}
     .music-fab:hover{transform:scale(1.08);background:#844057}
     .music-fab:not(.muted){animation:pulse 2.4s ease-in-out infinite}
     .music-fab.muted .ic-on,.music-fab:not(.muted) .ic-off{display:none}
     .yt-hidden{position:fixed;left:-9999px;top:0;width:200px;height:200px;overflow:hidden;pointer-events:none}
+    .toast{position:fixed;left:50%;bottom:24px;z-index:70;max-width:min(92vw,420px);padding:13px 20px;border-radius:14px;background:var(--wine);color:#fff;font-size:13px;line-height:1.6;text-align:center;box-shadow:0 12px 30px #662c3c55;opacity:0;visibility:hidden;translate:-50% 14px;transition:opacity .4s,translate .4s,visibility .4s}
+    .toast.show{opacity:1;visibility:visible;translate:-50% 0}
 
     /* ===== Header ===== */
     .site-header{max-width:1320px;margin:auto;padding:25px 5%;display:flex;justify-content:space-between;align-items:center;gap:16px}
@@ -111,8 +119,8 @@
     .photo-area{aspect-ratio:4/4.6;background:#f0e2df;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:pointer}
     .memory-card:nth-child(4n+2) .photo-area{background:#ead6d9}
     .memory-card:nth-child(4n+3) .photo-area{background:#eee3da}
-    .photo-area img{width:100%;height:100%;object-fit:cover;display:none;opacity:0;transition:opacity .8s,transform .8s}
-    .photo-area.has-photo img{display:block;opacity:1}
+    .photo-area img{width:100%;height:100%;object-fit:cover;display:none;transition:transform .8s}
+    .photo-area.has-photo img{display:block}
     .memory-card:hover .photo-area img{transform:scale(1.07)}
     .placeholder{display:flex;flex-direction:column;align-items:center;gap:11px;color:#b18b91;text-align:center;padding:15px}
     .placeholder svg{width:31px;height:31px;stroke-width:1.2}
@@ -172,12 +180,9 @@
     @media(prefers-reduced-motion:reduce){
       *{animation:none!important;transition:none!important}
       .rise-in,.reveal{opacity:1;translate:none}
-      .hearts{display:none}
+      .hearts,.fx,.petals{display:none}
     }
   </style>
-  <script src="/_sdk/ea2423e0a01a756f.data_sdk.js" type="text/javascript" integrity="sha512-Sg0g23oG9zpxeVGJw6Q935Wt19sv7pbBtYnmz0dqpxqMmhlUFeBYJjrBQheq1xeE/u69m7uZ8NgZRq4P2+K57w=="></script>
-  <script src="/_sdk/dc09d1c476e4a0aa.editing_sdk.js" type="text/javascript" integrity="sha512-fWPJYUpfjxXnsK3FLu4tDL/49uCKmEkUGkcvrKVxnYO+jn6VXV8wgol0bSp2HY54QJtG71bQKCHxs6uDgplmqg=="></script>
-  <script src="/_sdk/a202d01287f70bbd.resizing_sdk.js" type="text/javascript" integrity="sha512-1HSymNrRbmVrPINeyKeKDVHS1r/3KBjQvJ/IjvgAGUrP4+gPCV6nzQEbyDs7SEReA7mlPuHyFKB9Zk2K9KmXhQ=="></script>
 </head>
 <body>
 
@@ -194,70 +199,72 @@
     </div>
   </div>
 
+  <canvas class="fx" id="fx" aria-hidden="true"></canvas>
+  <div class="petals" id="petals" aria-hidden="true"></div>
   <div class="hearts" id="hearts" aria-hidden="true"></div>
   <div class="yt-hidden" aria-hidden="true"><div id="yt-player"></div></div>
-  <button class="music-fab muted canva-button" id="music-fab" type="button" aria-label="Putar musik">
+  <div class="toast" id="toast" role="status"></div>
+  <button class="music-fab muted" id="music-fab" type="button" aria-label="Putar musik">
     <i class="ic-on" data-lucide="volume-2" aria-hidden="true"></i><i class="ic-off" data-lucide="volume-x" aria-hidden="true"></i>
   </button>
 
-  <header class="site-header canva-header">
-    <a class="brand canva-link rise-in" href="#awal">♡ Untukmu</a>
-    <div class="header-right canva-text rise-in" style="--d:.15s"><span class="dot"></span> Sebuah halaman kecil tentang kita</div>
+  <header class="site-header">
+    <a class="brand rise-in" href="#awal">♡ Untukmu</a>
+    <div class="header-right rise-in" style="--d:.15s"><span class="dot"></span> Sebuah halaman kecil tentang kita</div>
   </header>
 
   <main>
-    <section class="hero canva-section" id="awal" aria-labelledby="hero-title">
+    <section class="hero" id="awal" aria-labelledby="hero-title">
       <div>
-        <div class="eyebrow canva-text rise-in" style="--d:.2s">Hari yang istimewa</div>
+        <div class="eyebrow rise-in" style="--d:.2s">Hari yang istimewa</div>
         <h1 id="hero-title" class="rise-in" style="--d:.35s">Happy<br><em>Birthday.</em></h1>
-        <p class="hero-copy canva-text rise-in" style="--d:.5s">Untuk seseorang yang membuat hari-hari terasa lebih hangat. Di hari ulang tahunmu, semoga setiap langkah dipenuhi bahagia, setiap harapan menemukan jalannya, dan senyummu selalu punya alasan untuk hadir.</p>
+        <p class="hero-copy rise-in" style="--d:.5s">Untuk seseorang yang membuat hari-hari terasa lebih hangat. Di hari ulang tahunmu, semoga setiap langkah dipenuhi bahagia, setiap harapan menemukan jalannya, dan senyummu selalu punya alasan untuk hadir.</p>
         <div class="hero-actions rise-in" style="--d:.65s">
-          <a class="primary-btn canva-button" href="#galeri">Jelajahi kenangan <i data-lucide="arrow-right" aria-hidden="true"></i></a>
-          <a class="secondary-btn canva-button" href="#surat">Baca ucapan <i data-lucide="heart" aria-hidden="true"></i></a>
+          <a class="primary-btn" href="#galeri">Jelajahi kenangan <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+          <a class="secondary-btn" href="#surat">Baca ucapan <i data-lucide="heart" aria-hidden="true"></i></a>
         </div>
       </div>
       <div class="hero-art rise-in" style="--d:.5s" aria-hidden="true">
         <div class="art-circle">
-          <!-- Ganti lewat foto/hero-1.jpg dan foto/hero-2.jpg (src bawaan jadi cadangan) -->
-          <img id="hero-photo-left" class="canva-image" src="foto/utama.jpeg" alt="Foto utama">
-          <img id="hero-photo-right" class="canva-image" src="foto/utama2.jpeg" alt="Foto utama kedua">
+          <img src="foto/utama.jpeg" alt="Foto utama">
+          <img src="foto/utama2.jpeg" alt="Foto utama kedua">
         </div>
         <div class="heart-stamp"><i data-lucide="heart"></i></div>
       </div>
     </section>
 
-    <section class="letter-section canva-section" id="surat" aria-labelledby="letter-title">
+    <section class="letter-section" id="surat" aria-labelledby="letter-title">
       <div class="letter-inner">
         <div class="tiny-heart reveal" aria-hidden="true">♡</div>
         <h2 id="letter-title" class="reveal" style="--d:.1s">Selamat ulang tahun, sayang.</h2>
-        <p class="canva-text reveal" style="--d:.2s">Ada banyak hal indah di dunia ini, tetapi berbagi cerita, tawa, dan waktu bersamamu selalu terasa paling istimewa. Terima kasih sudah menjadi dirimu: seseorang yang begitu berarti di hatiku.</p>
-        <p class="canva-text reveal" style="--d:.3s">Semoga tahun yang baru membawamu lebih dekat pada semua yang kamu impikan. Apa pun yang menanti di depan, aku berharap kita terus punya ruang untuk saling menggenggam dan menciptakan kenangan indah bersama.</p>
-        <p class="signature canva-text reveal" style="--d:.4s">Dengan cinta, selalu ♡</p>
+        <p class="reveal" style="--d:.2s">Ada banyak hal indah di dunia ini, tetapi berbagi cerita, tawa, dan waktu bersamamu selalu terasa paling istimewa. Terima kasih sudah menjadi dirimu: seseorang yang begitu berarti di hatiku.</p>
+        <p class="reveal" style="--d:.3s">Semoga tahun yang baru membawamu lebih dekat pada semua yang kamu impikan. Apa pun yang menanti di depan, aku berharap kita terus punya ruang untuk saling menggenggam dan menciptakan kenangan indah bersama.</p>
+        <p class="signature reveal" style="--d:.4s">Dengan cinta, selalu ♡</p>
       </div>
     </section>
 
-    <section class="gallery-section canva-section" id="galeri" aria-labelledby="gallery-title">
+    <section class="gallery-section" id="galeri" aria-labelledby="gallery-title">
       <div class="section-top">
         <div class="reveal">
-          <div class="eyebrow canva-text">Album kecil kita</div>
+          <div class="eyebrow">Album kecil kita</div>
           <h2 id="gallery-title">Galeri kenangan</h2>
         </div>
-        <p class="gallery-hint canva-text reveal" style="--d:.15s">Ketuk fotonya untuk melihat lebih dekat, lalu geser untuk menjelajah satu per satu.</p>
+        <p class="gallery-hint reveal" style="--d:.15s">Ketuk fotonya untuk melihat lebih dekat, lalu geser untuk menjelajah satu per satu.</p>
       </div>
       <div class="gallery-grid" id="gallery-grid"></div>
     </section>
   </main>
 
-  <footer class="footer canva-footer">Untuk setiap cerita yang masih akan kita tulis bersama. ♡</footer>
+  <footer class="footer">Untuk setiap cerita yang masih akan kita tulis bersama. ♡</footer>
 
   <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Lihat foto kenangan" aria-hidden="true">
     <div class="viewer-dialog">
-      <button class="viewer-close canva-button" id="viewer-close" type="button" aria-label="Tutup galeri"><i data-lucide="x"></i></button>
+      <button class="viewer-close" id="viewer-close" type="button" aria-label="Tutup galeri"><i data-lucide="x"></i></button>
       <div class="viewer-image-wrap" id="viewer-image-wrap"></div>
       <p class="viewer-caption" id="viewer-caption"></p>
       <div class="viewer-nav">
-        <button class="canva-button" id="viewer-prev" type="button" aria-label="Foto sebelumnya"><i data-lucide="arrow-left"></i></button>
-        <button class="canva-button" id="viewer-next" type="button" aria-label="Foto berikutnya"><i data-lucide="arrow-right"></i></button>
+        <button id="viewer-prev" type="button" aria-label="Foto sebelumnya"><i data-lucide="arrow-left"></i></button>
+        <button id="viewer-next" type="button" aria-label="Foto berikutnya"><i data-lucide="arrow-right"></i></button>
       </div>
     </div>
   </div>
@@ -286,31 +293,44 @@
     };
 
     const $ = id => document.getElementById(id);
-    const photoSrc = name => `${CONFIG.folder}/${encodeURIComponent(name).replace(/%2F/g, '/')}`;
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const icons = () => { if (window.lucide) lucide.createIcons(); };
+
+    // Pesan kecil di bawah layar
+    let toastTimer;
+    function notify(msg) {
+      const t = $('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 7000);
+    }
 
     /* ================= GALERI ================= */
-    const photos = CONFIG.gallery.map(photoSrc);
+    const photos = CONFIG.gallery.map(name => `${CONFIG.folder}/${encodeURIComponent(name)}`);
     const total = photos.length;
     const grid = $('gallery-grid');
     let current = 0, lastFocus = null;
 
     photos.forEach((src, i) => {
-      const n = i + 1, label = String(n).padStart(2, '0');
+      const n = i + 1;
       const card = document.createElement('article');
-      card.className = 'memory-card canva-card reveal';
+      card.className = 'memory-card reveal';
       card.style.setProperty('--d', `${(i % 4) * 0.1}s`);
       card.innerHTML = `
         <div class="photo-area has-photo">
-          <img class="canva-image" alt="Foto kenangan ${n}" src="${src}" loading="lazy">
+          <img alt="Foto kenangan ${n}" src="${src}" loading="lazy">
           <div class="placeholder"><i data-lucide="image" aria-hidden="true"></i><span>Tempat untuk<br>kenanganmu</span></div>
         </div>
         <div class="card-bottom">
-          <span class="card-number">Bingkai ${label}</span>
-          <button class="icon-btn canva-button" type="button" aria-label="Lihat bingkai ${n}"><i data-lucide="eye"></i></button>
+          <span class="card-number">Bingkai ${String(n).padStart(2, '0')}</span>
+          <button class="icon-btn" type="button" aria-label="Lihat bingkai ${n}"><i data-lucide="eye"></i></button>
         </div>`;
       grid.appendChild(card);
 
       const area = card.querySelector('.photo-area');
+      // Kalau file foto tidak ditemukan, tampilkan bingkai kosong
+      card.querySelector('img').addEventListener('error', () => { area.classList.remove('has-photo'); photos[i] = null; });
       area.addEventListener('click', () => openViewer(i));
       card.querySelector('.icon-btn').addEventListener('click', () => openViewer(i));
     });
@@ -382,8 +402,15 @@
       fab.classList.toggle('muted', !playing);
       fab.setAttribute('aria-label', playing ? 'Jeda musik' : 'Putar musik');
     }
-    function play() { wantPlay = true; if (ytReady) { yt.setVolume(100); yt.playVideo(); } }
-    function pause() { wantPlay = false; if (ytReady) yt.pauseVideo(); playing = false; syncFab(); }
+    function play() {
+      wantPlay = true;
+      if (ytReady) { yt.setVolume(100); yt.playVideo(); }
+    }
+    function pause() {
+      wantPlay = false;
+      if (ytReady) yt.pauseVideo();
+      playing = false; syncFab();
+    }
 
     window.onYouTubeIframeAPIReady = () => {
       yt = new YT.Player('yt-player', {
@@ -395,26 +422,135 @@
             if (e.data === YT.PlayerState.PLAYING) { playing = true; syncFab(); }
             else if (e.data === YT.PlayerState.PAUSED) { playing = false; syncFab(); }
             else if (e.data === YT.PlayerState.ENDED) { yt.seekTo(0); yt.playVideo(); }
-          }
+          },
+          onError: () => notify('Lagu tidak bisa diputar. Buka halaman lewat http://localhost atau hosting, bukan langsung dari file.')
         }
       });
     };
     const apiScript = document.createElement('script');
     apiScript.src = 'https://www.youtube.com/iframe_api';
+    apiScript.onerror = () => notify('Pemutar YouTube gagal dimuat. Cek koneksi internet.');
     document.head.appendChild(apiScript);
 
+    /* ================= PETASAN & BUNGA ================= */
+    function celebrate() {
+      if (reduceMotion) return;
+      launchPetals();
+      launchFireworks();
+    }
+
+    function launchPetals() {
+      const box = $('petals'), flowers = ['🌸', '🌷', '🌹', '🌺', '💮', '🌼'];
+      for (let i = 0; i < 42; i++) {
+        const s = document.createElement('span');
+        s.textContent = flowers[i % flowers.length];
+        s.style.left = `${Math.random() * 100}%`;
+        s.style.fontSize = `${18 + Math.random() * 18}px`;
+        s.style.setProperty('--sway', `${(Math.random() - 0.5) * 160}px`);
+        s.style.animationDuration = `${5 + Math.random() * 4}s`;
+        s.style.animationDelay = `${Math.random() * 3}s`;
+        box.appendChild(s);
+      }
+      setTimeout(() => box.replaceChildren(), 13000);
+    }
+
+    function launchFireworks() {
+      const cv = $('fx'), ctx = cv.getContext('2d');
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      let W = 0, H = 0;
+      const resize = () => {
+        W = window.innerWidth; H = window.innerHeight;
+        cv.width = W * dpr; cv.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      };
+      resize();
+      window.addEventListener('resize', resize);
+
+      const colors = ['#ff6b8b', '#ffd166', '#ff9ec4', '#ffffff', '#ffb347', '#e58bff', '#7de0ff'];
+      const rockets = [], sparks = [];
+      const startAt = performance.now(), duration = 6500;
+      let nextLaunch = 0, last = startAt, burstCount = 0;
+      cv.classList.add('on');
+
+      function burst(x, y, color) {
+        const heart = burstCount++ % 3 === 2; // tiap 3 ledakan ada satu berbentuk hati
+        const n = heart ? 64 : 70;
+        for (let k = 0; k < n; k++) {
+          let vx, vy;
+          if (heart) {
+            const t = (k / n) * Math.PI * 2;
+            vx = (16 * Math.pow(Math.sin(t), 3)) / 5.2;
+            vy = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)) / 5.2;
+          } else {
+            const a = Math.random() * Math.PI * 2, sp = 1.5 + Math.random() * 4.2;
+            vx = Math.cos(a) * sp; vy = Math.sin(a) * sp;
+          }
+          sparks.push({ x, y, vx, vy, life: 1, decay: 0.008 + Math.random() * 0.008, color });
+        }
+      }
+
+      function frame(now) {
+        const dt = Math.min((now - last) / 16.7, 3); last = now;
+        const elapsed = now - startAt;
+
+        if (elapsed < duration && now >= nextLaunch) {
+          rockets.push({ x: W * (0.12 + Math.random() * 0.76), y: H, ty: H * (0.12 + Math.random() * 0.38), vy: 7 + Math.random() * 3, color: colors[Math.floor(Math.random() * colors.length)] });
+          nextLaunch = now + 300 + Math.random() * 450;
+        }
+
+        // pudarkan jejak frame sebelumnya
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillStyle = 'rgba(0,0,0,0.22)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.globalCompositeOperation = 'source-over';
+
+        for (let i = rockets.length - 1; i >= 0; i--) {
+          const r = rockets[i];
+          r.y -= r.vy * dt;
+          ctx.globalAlpha = 1; ctx.fillStyle = r.color;
+          ctx.beginPath(); ctx.arc(r.x, r.y, 2.4, 0, 6.283); ctx.fill();
+          if (r.y <= r.ty) { burst(r.x, r.y, r.color); rockets.splice(i, 1); }
+        }
+        for (let i = sparks.length - 1; i >= 0; i--) {
+          const s = sparks[i];
+          s.vx *= 0.985; s.vy = s.vy * 0.985 + 0.045 * dt;
+          s.x += s.vx * dt; s.y += s.vy * dt; s.life -= s.decay * dt;
+          if (s.life <= 0) { sparks.splice(i, 1); continue; }
+          ctx.globalAlpha = s.life; ctx.fillStyle = s.color;
+          ctx.beginPath(); ctx.arc(s.x, s.y, 2.1, 0, 6.283); ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+
+        if (elapsed < duration || rockets.length || sparks.length) {
+          requestAnimationFrame(frame);
+        } else {
+          cv.classList.remove('on');
+          window.removeEventListener('resize', resize);
+          setTimeout(() => ctx.clearRect(0, 0, W, H), 900);
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    /* ================= GERBANG ================= */
     function closeGate() {
       gate.classList.add('hide');
       gate.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     }
     document.body.style.overflow = 'hidden';
-    $('gate-yes').addEventListener('click', () => { closeGate(); play(); });
-    $('gate-no').addEventListener('click', () => { closeGate(); pause(); });
+
+    $('gate-yes').addEventListener('click', () => {
+      closeGate();   // tutup dulu supaya halaman selalu terbuka, apa pun yang terjadi pada musik
+      celebrate();
+      play();
+      if (location.protocol === 'file:') notify('Musik YouTube tidak bisa diputar kalau halaman dibuka langsung dari file. Buka lewat http://localhost atau hosting.');
+    });
+    $('gate-no').addEventListener('click', () => { closeGate(); celebrate(); pause(); });
     $('gate-yes').focus();
     fab.addEventListener('click', () => (playing ? pause() : play()));
 
-    /* ================= ANIMASI ================= */
+    /* ================= ANIMASI HALAMAN ================= */
     // Muncul saat di-scroll
     const io = new IntersectionObserver(entries => {
       entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
@@ -434,7 +570,7 @@
     }
 
     window.addEventListener('pagehide', () => { if (yt && ytReady) yt.pauseVideo(); });
-    lucide.createIcons();
+    icons();
   </script>
 </body>
 </html>
